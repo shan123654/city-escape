@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b1k4ys6rhxm62"]
 
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/monster.tscn" id="2_monster"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ground"]
 size = Vector3(20, 1, 20)
@@ -35,3 +36,6 @@ environment = SubResource("Environment_main")
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector3(0, 0.5, 0)
+
+[node name="Monster" parent="." instance=ExtResource("2_monster")]
+position = Vector3(3, 0, -3)
