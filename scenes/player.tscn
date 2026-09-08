@@ -21,7 +21,10 @@ mesh = SubResource("CapsuleMesh_player")
 position = Vector3(0, 1, 0)
 shape = SubResource("CapsuleShape3D_player")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-position = Vector3(0, 4, 6)
+[node name="CameraPivot" type="Node3D" parent="."]
+position = Vector3(0, 1, 0)
 rotation_degrees = Vector3(-26.565, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+position = Vector3(0, 0, 6.708204)
 current = true
