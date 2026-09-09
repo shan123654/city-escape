@@ -3,8 +3,8 @@
 ## Current Task
 
 Task ID: TASK-004
-Status: READY_FOR_BUILD
-Assigned To: Builder
+Status: READY_FOR_REVIEW
+Assigned To: Reviewer
 
 ---
 
@@ -40,7 +40,26 @@ Acceptance criteria:
 
 ## Builder Report
 
-No report yet; new task.
+Implemented void-fall death using the existing guarded `die()` and deferred scene
+reload. `fall_death_distance` is configurable in the Inspector (default: 100 world
+units), measured from the player's original world-space spawn height. At the current
+spawn Y of 0.5, death occurs at Y <= -99.5 after movement.
+
+Files changed:
+- `scripts/player.gd`: configurable fall distance, captured spawn height, and fall
+  threshold check calling the existing death flow.
+- `AI_HANDOFF.md`: Builder Report and handoff to Reviewer.
+
+Validation: Godot 4.7.2 headless project startup and a temporary windowed integration
+test passed without warnings or runtime errors. Checked platform safety, the 99/100
+unit boundary, duplicate-death protection, actually walking off the platform and
+falling under gravity, original player/monster spawn restoration, movement/chase/
+camera/cursor controls after respawn, and monster-contact death after a fall restart.
+Temporary test files were removed. `git diff --check` passed.
+
+Manual reproduction: launch with F5, hold Right to leave the platform and outrun the
+monster, then wait for the fall to restart the level. After respawn, verify movement
+and mouse orbit, then stand still to verify monster-contact restart.
 
 ---
 
@@ -52,5 +71,4 @@ No review yet; new task.
 
 ## Next Action
 
-Builder should implement TASK-004, test it when possible, update `Builder Report`, and
-transition the handoff to `READY_FOR_REVIEW / Reviewer`.
+Reviewer should inspect TASK-004 and its validation, then record the review outcome.

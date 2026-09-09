@@ -2,8 +2,11 @@ extends CharacterBody3D
 
 @export var speed: float = 5.0
 @export var mouse_sensitivity: float = 0.003
+@export_range(1.0, 1000.0, 1.0, "or_greater") var fall_death_distance: float = 100.0
 
 @onready var camera_pivot: Node3D = $CameraPivot
+# Measure the fall from this instance's original world-space spawn height.
+@onready var _spawn_height: float = global_position.y
 
 var _is_dead: bool = false
 
@@ -43,3 +46,6 @@ func _physics_process(delta: float) -> void:
 	velocity.x = input_direction.x * speed
 	velocity.z = input_direction.y * speed
 	move_and_slide()
+
+	if global_position.y <= _spawn_height - fall_death_distance:
+		die()
