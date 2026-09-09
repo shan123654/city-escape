@@ -37,5 +37,6 @@ environment = SubResource("Environment_main")
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector3(0, 0.5, 0)
 
-[node name="Monster" parent="." instance=ExtResource("2_monster")]
+[node name="Monster" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_monster")]
 position = Vector3(3, 0, -3)
+target = NodePath("../Player")

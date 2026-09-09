@@ -5,6 +5,17 @@ extends CharacterBody3D
 
 @onready var camera_pivot: Node3D = $CameraPivot
 
+var _is_dead: bool = false
+
+
+func die() -> void:
+	if _is_dead:
+		return
+	_is_dead = true
+	set_physics_process(false)
+	set_process_unhandled_input(false)
+	get_tree().reload_current_scene.call_deferred()
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
