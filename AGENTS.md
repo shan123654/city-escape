@@ -49,6 +49,9 @@ Assigned To: Builder
 
 Do not fix the implementation yourself.
 
+During normal task operation, the Reviewer must only modify `AI_HANDOFF.md` unless
+explicitly instructed otherwise.
+
 ---
 
 ## Distributor
@@ -64,6 +67,29 @@ The Distributor may:
 - decide what happens after approval
 
 Distributor writes instructions under `Distributor Instructions`.
+
+During normal task assignment, the Distributor should only modify `AI_HANDOFF.md`
+unless explicitly instructed otherwise.
+
+### Coordination Git Handoff
+
+When the Distributor or Reviewer needs to return an `AI_HANDOFF.md` coordination
+change to the shared `main` branch:
+
+1. Commit the change on the current working branch.
+2. Create a pull request targeting `main`.
+3. Mark the pull request with the `agent-handoff` label. Do not apply this label to
+   Builder implementation pull requests or other non-coordination changes.
+4. Let the agent handoff GitHub Actions workflow enable squash auto-merge. The agent
+   must not attempt to enable auto-merge from the Codex Cloud shell.
+5. Do not ask the user to merge the pull request manually.
+6. Do not bypass branch protection, required checks, or review requirements.
+7. If auto-merge cannot be enabled because of permissions, authentication, repository
+   settings, conflicts, or failed checks, report the exact blocker instead of force
+   merging.
+8. Never force-push directly to `main`.
+
+This rule applies only to Distributor- and Reviewer-owned coordination changes.
 
 ---
 

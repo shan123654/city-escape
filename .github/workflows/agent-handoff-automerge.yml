@@ -1,0 +1,39 @@
+name: Agent handoff auto-merge
+
+on:
+  pull_request_target:
+    types: [opened, reopened, labeled, synchronize, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable-auto-merge:
+    if: >-
+      github.event.pull_request.base.ref == 'main' &&
+      contains(github.event.pull_request.labels.*.name, 'agent-handoff') &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify this is a coordination-only change
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          changed_files="$(gh api --paginate \
+            "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files" \
+            --jq '.[].filename')"
+
+          if [[ "$changed_files" != "AI_HANDOFF.md" ]]; then
+            echo "Refusing auto-merge: agent handoff PRs may only change AI_HANDOFF.md."
+            printf 'Changed files:\n%s\n' "$changed_files"
+            exit 1
+          fi
+
+      - name: Enable squash auto-merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge "$PR_URL" --auto --squash
