@@ -10,7 +10,9 @@ Assigned To: Distributor
 
 ## Distributor Instructions
 
-No instructions yet.
+Distributor takeover and repository orientation are complete. No development task has
+been assigned. Wait for the product owner's next high-level product request before
+creating a Builder task.
 
 ---
 
@@ -28,4 +30,5 @@ No review yet.
 
 ## Next Action
 
-Distributor should create the next task.
+Distributor should remain assigned while the project is idle and convert the product
+owner's next high-level request into one small, reviewable Builder task.
