@@ -6,6 +6,26 @@ The `Assigned To` field in `AI_HANDOFF.md` determines which agent should perform
 
 ---
 
+## Workflow State Transitions
+
+`Status` and `Assigned To` in `AI_HANDOFF.md` must be updated together according to
+this state machine:
+
+| Current status | Agent that acts | Allowed next status | Next assigned agent |
+| --- | --- | --- | --- |
+| `IDLE` | Distributor | `READY_FOR_BUILD` | Builder |
+| `READY_FOR_BUILD` | Builder | `READY_FOR_REVIEW` | Reviewer |
+| `READY_FOR_REVIEW` | Reviewer | `CHANGES_REQUESTED` | Builder |
+| `READY_FOR_REVIEW` | Reviewer | `APPROVED` | Distributor |
+| `CHANGES_REQUESTED` | Builder | `READY_FOR_REVIEW` | Reviewer |
+| `APPROVED` | Distributor | `IDLE` | Distributor |
+
+Only the agent named in `Assigned To` may perform the next transition. If the current
+`Status` and `Assigned To` combination does not match this table, do not guess or
+modify implementation files; report the inconsistent workflow state.
+
+---
+
 ## Builder
 
 When `Assigned To: Builder`:
